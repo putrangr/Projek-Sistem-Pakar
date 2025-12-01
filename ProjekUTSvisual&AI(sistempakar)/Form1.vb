@@ -1,8 +1,7 @@
-﻿Public Class Form1
+﻿Imports MySql.Data.MySqlClient
+
+Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Optional: initialize or test connection here
-        ' Module_koneksi.OpenConnection()
-        ' Module_koneksi.CloseConnection()
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
@@ -14,24 +13,25 @@
             Return
         End If
 
-        'tes gothub login
-
         Try
+            Dim hashed = EnkripsiPassword(password)
+
             OpenConnection()
-            Dim sql = "SELECT * FROM users WHERE username = @user AND password = @pass LIMIT 1"
-            cmd = New MySql.Data.MySqlClient.MySqlCommand(sql, conn)
+            Dim sql = "SELECT * FROM tb_akun WHERE username = @user AND password = @pass LIMIT 1"
+            cmd = New MySqlCommand(sql, connStr)
+            cmd.Parameters.Clear()
             cmd.Parameters.AddWithValue("@user", username)
             cmd.Parameters.AddWithValue("@pass", password)
+
             rd = cmd.ExecuteReader()
 
-            If rd.HasRows Then
+            If rd IsNot Nothing AndAlso rd.HasRows Then
                 rd.Read()
                 MessageBox.Show("Login berhasil. Selamat datang " & rd("username").ToString(), "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
                 rd.Close()
                 CloseConnection()
-                ' TODO: buka form utama jika ada, mis: Form3.Show()
             Else
-                rd.Close()
+                If rd IsNot Nothing AndAlso Not rd.IsClosed Then rd.Close()
                 CloseConnection()
                 MessageBox.Show("Username atau password salah.", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error)
             End If
@@ -45,10 +45,12 @@
     End Sub
 
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        ' Open register form
         Dim frm As New Form2()
         frm.Show()
         Me.Hide()
     End Sub
 
+    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
+
+    End Sub
 End Class
