@@ -22,6 +22,7 @@ Partial Class Form1
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        components = New ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Panel1 = New Panel()
         PictureBox1 = New PictureBox()
@@ -31,16 +32,18 @@ Partial Class Form1
         PictureBox2 = New PictureBox()
         Label1 = New Label()
         TextBox1 = New TextBox()
-        TextBox2 = New TextBox()
+        txbPassword = New TextBox()
         Label2 = New Label()
         Label3 = New Label()
         Button1 = New Button()
         Label4 = New Label()
         LinkLabel1 = New LinkLabel()
+        ErrorProvider1 = New ErrorProvider(components)
         Panel1.SuspendLayout()
         CType(PictureBox1, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).BeginInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).BeginInit()
+        CType(ErrorProvider1, ComponentModel.ISupportInitialize).BeginInit()
         SuspendLayout()
         ' 
         ' Panel1
@@ -51,17 +54,19 @@ Partial Class Form1
         Panel1.Controls.Add(Label5)
         Panel1.Controls.Add(PictureBox3)
         Panel1.Controls.Add(PictureBox2)
-        Panel1.Location = New Point(-1, -3)
+        Panel1.Location = New Point(-1, -2)
+        Panel1.Margin = New Padding(3, 2, 3, 2)
         Panel1.Name = "Panel1"
-        Panel1.Size = New Size(392, 454)
+        Panel1.Size = New Size(343, 340)
         Panel1.TabIndex = 0
         ' 
         ' PictureBox1
         ' 
         PictureBox1.Image = My.Resources.Resources.IMG_3539
-        PictureBox1.Location = New Point(61, 0)
+        PictureBox1.Location = New Point(53, 0)
+        PictureBox1.Margin = New Padding(3, 2, 3, 2)
         PictureBox1.Name = "PictureBox1"
-        PictureBox1.Size = New Size(267, 250)
+        PictureBox1.Size = New Size(234, 188)
         PictureBox1.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox1.TabIndex = 0
         PictureBox1.TabStop = False
@@ -71,9 +76,9 @@ Partial Class Form1
         Label6.AutoSize = True
         Label6.Font = New Font("Segoe UI Semibold", 10.2F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label6.ForeColor = Color.White
-        Label6.Location = New Point(103, 296)
+        Label6.Location = New Point(90, 222)
         Label6.Name = "Label6"
-        Label6.Size = New Size(171, 23)
+        Label6.Size = New Size(141, 19)
         Label6.TabIndex = 1
         Label6.Text = "(Profile Expert for IT)"
         ' 
@@ -82,18 +87,19 @@ Partial Class Form1
         Label5.AutoSize = True
         Label5.Font = New Font("Segoe UI", 18F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label5.ForeColor = Color.White
-        Label5.Location = New Point(34, 253)
+        Label5.Location = New Point(30, 190)
         Label5.Name = "Label5"
-        Label5.Size = New Size(326, 41)
+        Label5.Size = New Size(265, 32)
         Label5.TabIndex = 1
         Label5.Text = "Wellcome To ProEx-IT"
         ' 
         ' PictureBox3
         ' 
         PictureBox3.Image = CType(resources.GetObject("PictureBox3.Image"), Image)
-        PictureBox3.Location = New Point(-84, -73)
+        PictureBox3.Location = New Point(-74, -55)
+        PictureBox3.Margin = New Padding(3, 2, 3, 2)
         PictureBox3.Name = "PictureBox3"
-        PictureBox3.Size = New Size(147, 536)
+        PictureBox3.Size = New Size(129, 402)
         PictureBox3.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox3.TabIndex = 2
         PictureBox3.TabStop = False
@@ -101,9 +107,10 @@ Partial Class Form1
         ' PictureBox2
         ' 
         PictureBox2.Image = CType(resources.GetObject("PictureBox2.Image"), Image)
-        PictureBox2.Location = New Point(280, 222)
+        PictureBox2.Location = New Point(245, 166)
+        PictureBox2.Margin = New Padding(3, 2, 3, 2)
         PictureBox2.Name = "PictureBox2"
-        PictureBox2.Size = New Size(148, 384)
+        PictureBox2.Size = New Size(130, 288)
         PictureBox2.SizeMode = PictureBoxSizeMode.StretchImage
         PictureBox2.TabIndex = 2
         PictureBox2.TabStop = False
@@ -113,34 +120,36 @@ Partial Class Form1
         Label1.AutoSize = True
         Label1.Font = New Font("Segoe UI", 24F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label1.ForeColor = Color.Teal
-        Label1.Location = New Point(527, 73)
+        Label1.Location = New Point(461, 55)
         Label1.Name = "Label1"
-        Label1.Size = New Size(127, 54)
+        Label1.Size = New Size(104, 45)
         Label1.TabIndex = 1
         Label1.Text = "Login"
         ' 
         ' TextBox1
         ' 
-        TextBox1.Location = New Point(471, 197)
+        TextBox1.Location = New Point(412, 148)
+        TextBox1.Margin = New Padding(3, 2, 3, 2)
         TextBox1.Name = "TextBox1"
-        TextBox1.Size = New Size(250, 27)
+        TextBox1.Size = New Size(219, 23)
         TextBox1.TabIndex = 2
         ' 
-        ' TextBox2
+        ' txbPassword
         ' 
-        TextBox2.Location = New Point(471, 276)
-        TextBox2.Name = "TextBox2"
-        TextBox2.Size = New Size(250, 27)
-        TextBox2.TabIndex = 2
+        txbPassword.Location = New Point(412, 207)
+        txbPassword.Margin = New Padding(3, 2, 3, 2)
+        txbPassword.Name = "txbPassword"
+        txbPassword.Size = New Size(219, 23)
+        txbPassword.TabIndex = 2
         ' 
         ' Label2
         ' 
         Label2.AutoSize = True
         Label2.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label2.ForeColor = Color.Teal
-        Label2.Location = New Point(471, 174)
+        Label2.Location = New Point(412, 130)
         Label2.Name = "Label2"
-        Label2.Size = New Size(78, 20)
+        Label2.Size = New Size(60, 15)
         Label2.TabIndex = 3
         Label2.Text = "Username"
         ' 
@@ -149,17 +158,18 @@ Partial Class Form1
         Label3.AutoSize = True
         Label3.Font = New Font("Segoe UI Semibold", 9F, FontStyle.Bold, GraphicsUnit.Point, CByte(0))
         Label3.ForeColor = Color.Teal
-        Label3.Location = New Point(471, 253)
+        Label3.Location = New Point(412, 190)
         Label3.Name = "Label3"
-        Label3.Size = New Size(73, 20)
+        Label3.Size = New Size(57, 15)
         Label3.TabIndex = 3
         Label3.Text = "Password"
         ' 
         ' Button1
         ' 
-        Button1.Location = New Point(549, 334)
+        Button1.Location = New Point(480, 250)
+        Button1.Margin = New Padding(3, 2, 3, 2)
         Button1.Name = "Button1"
-        Button1.Size = New Size(94, 38)
+        Button1.Size = New Size(82, 28)
         Button1.TabIndex = 4
         Button1.Text = "Login"
         Button1.UseVisualStyleBackColor = True
@@ -168,9 +178,9 @@ Partial Class Form1
         ' 
         Label4.AutoSize = True
         Label4.Font = New Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
-        Label4.Location = New Point(507, 396)
+        Label4.Location = New Point(444, 297)
         Label4.Name = "Label4"
-        Label4.Size = New Size(137, 17)
+        Label4.Size = New Size(123, 13)
         Label4.TabIndex = 5
         Label4.Text = "Belum punya account?"
         ' 
@@ -179,27 +189,32 @@ Partial Class Form1
         LinkLabel1.AutoSize = True
         LinkLabel1.Font = New Font("Segoe UI", 7.8F, FontStyle.Regular, GraphicsUnit.Point, CByte(0))
         LinkLabel1.LinkColor = Color.Teal
-        LinkLabel1.Location = New Point(649, 396)
+        LinkLabel1.Location = New Point(568, 297)
         LinkLabel1.Name = "LinkLabel1"
-        LinkLabel1.Size = New Size(56, 17)
+        LinkLabel1.Size = New Size(49, 13)
         LinkLabel1.TabIndex = 6
         LinkLabel1.TabStop = True
         LinkLabel1.Text = "Register"
         ' 
+        ' ErrorProvider1
+        ' 
+        ErrorProvider1.ContainerControl = Me
+        ' 
         ' Form1
         ' 
-        AutoScaleDimensions = New SizeF(8F, 20F)
+        AutoScaleDimensions = New SizeF(7F, 15F)
         AutoScaleMode = AutoScaleMode.Font
-        ClientSize = New Size(800, 450)
+        ClientSize = New Size(700, 338)
         Controls.Add(LinkLabel1)
         Controls.Add(Label4)
         Controls.Add(Button1)
         Controls.Add(Label3)
         Controls.Add(Label2)
-        Controls.Add(TextBox2)
+        Controls.Add(txbPassword)
         Controls.Add(TextBox1)
         Controls.Add(Label1)
         Controls.Add(Panel1)
+        Margin = New Padding(3, 2, 3, 2)
         Name = "Form1"
         Text = "Form1"
         Panel1.ResumeLayout(False)
@@ -207,6 +222,7 @@ Partial Class Form1
         CType(PictureBox1, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox3, ComponentModel.ISupportInitialize).EndInit()
         CType(PictureBox2, ComponentModel.ISupportInitialize).EndInit()
+        CType(ErrorProvider1, ComponentModel.ISupportInitialize).EndInit()
         ResumeLayout(False)
         PerformLayout()
     End Sub
@@ -215,7 +231,7 @@ Partial Class Form1
     Friend WithEvents PictureBox1 As PictureBox
     Friend WithEvents Label1 As Label
     Friend WithEvents TextBox1 As TextBox
-    Friend WithEvents TextBox2 As TextBox
+    Friend WithEvents txbPassword As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents Label3 As Label
     Friend WithEvents Button1 As Button
@@ -225,5 +241,6 @@ Partial Class Form1
     Friend WithEvents Label6 As Label
     Friend WithEvents PictureBox2 As PictureBox
     Friend WithEvents PictureBox3 As PictureBox
+    Friend WithEvents ErrorProvider1 As ErrorProvider
 
 End Class

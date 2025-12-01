@@ -1,56 +1,87 @@
-﻿Imports MySql.Data.MySqlClient
+﻿Imports System.Security.Cryptography
+Imports System.Text
+Imports MySql.Data.MySqlClient
 
 Public Class Form1
+
+    'ini Function untuk hassh password
+    Public Shared Function HashPassword(password As String) As String
+        Using sha256 As SHA256 = SHA256.Create()
+            Dim bytes As Byte() = Encoding.UTF8.GetBytes(password)
+            Dim hashBytes As Byte() = sha256.ComputeHash(bytes)
+            Dim sb As New StringBuilder()
+            For Each b As Byte In hashBytes
+                sb.Append(b.ToString("x2"))
+            Next
+            Return sb.ToString()
+        End Using
+    End Function
+
+    'ini untuk menampilkan karakter password jadi duit
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        txbPassword.PasswordChar = "$"c
+
     End Sub
 
+    'ini untuk prosses login
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         Dim username = TextBox1.Text.Trim()
-        Dim password = TextBox2.Text.Trim()
+        Dim password = txbPassword.Text.Trim()
 
-        If username = "" OrElse password = "" Then
-            MessageBox.Show("Isi username dan password terlebih dahulu.", "Peringatan", MessageBoxButtons.OK, MessageBoxIcon.Warning)
+        ' Validate inputs using ErrorProvider1
+        ErrorProvider1.Clear()
+        Dim valid As Boolean = True
+        If username = "" Then
+            ErrorProvider1.SetError(TextBox1, "Isi username terlebih dahulu")
+            valid = False
+        End If
+        If password = "" Then
+            ErrorProvider1.SetError(txbPassword, "Isi password terlebih dahulu")
+            If valid Then txbPassword.Focus()
+            valid = False
+        End If
+        If Not valid Then
             Return
         End If
 
-        Try
-            Dim hashed = EnkripsiPassword(password)
+        Dim hashedPass = HashPassword(password)
 
-            OpenConnection()
-            Dim sql = "SELECT * FROM tb_akun WHERE username = @user AND password = @pass LIMIT 1"
-            cmd = New MySqlCommand(sql, connStr)
-            cmd.Parameters.Clear()
-            cmd.Parameters.AddWithValue("@user", username)
-            cmd.Parameters.AddWithValue("@pass", password)
-
-            rd = cmd.ExecuteReader()
-
-            If rd IsNot Nothing AndAlso rd.HasRows Then
-                rd.Read()
-                MessageBox.Show("Login berhasil. Selamat datang " & rd("username").ToString(), "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
-                rd.Close()
-                CloseConnection()
-            Else
-                If rd IsNot Nothing AndAlso Not rd.IsClosed Then rd.Close()
-                CloseConnection()
-                MessageBox.Show("Username atau password salah.", "Gagal", MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Using conn As MySqlConnection = getConnection()
+            If conn Is Nothing Then
+                Return
             End If
 
-        Catch ex As Exception
-            MessageBox.Show("Terjadi kesalahan saat login: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
-        Finally
-            If rd IsNot Nothing AndAlso Not rd.IsClosed Then rd.Close()
-            CloseConnection()
-        End Try
+            Try
+                Dim sql As String = "SELECT * FROM tb_akun WHERE username = @user AND password = @pass"
+                Using cmd As New MySqlCommand(sql, conn)
+                    cmd.Parameters.AddWithValue("@user", username)
+                    cmd.Parameters.AddWithValue("@pass", hashedPass)
+
+                    Using reader As MySqlDataReader = cmd.ExecuteReader()
+
+                        If reader.HasRows Then
+                            MessageBox.Show("Login berhasil!", "Informasi", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                            Dim mainForm As New Form3()
+                            mainForm.Show()
+                            Me.Hide()
+                        Else
+                            MessageBox.Show("Username atau password salah.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+                        End If
+                    End Using
+                End Using
+            Catch ex As Exception
+                MessageBox.Show("Terjadi kesalahan saat login: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+        End Using
+
+
     End Sub
 
+    'ini untuk buka form register
     Private Sub LinkLabel1_LinkClicked(sender As Object, e As LinkLabelLinkClickedEventArgs) Handles LinkLabel1.LinkClicked
-        Dim frm As New Form2()
-        frm.Show()
+        Dim registerForm As New Form2()
+        registerForm.Show()
+
         Me.Hide()
-    End Sub
-
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs) Handles TextBox1.TextChanged
-
     End Sub
 End Class
